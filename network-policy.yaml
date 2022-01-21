@@ -1,4 +1,5 @@
 #below networkpolicy allows egress from namespace-a to nginx app in namespace-b
+
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
@@ -15,3 +16,16 @@ spec:
     - podSelector:
         matchLabels:
           app: nginx      #nginx app present in namespace-b
+       
+-------------------------------------------------------------------------
+#deny all egress from namespace-b
+
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: default-deny-egress
+  namespace: namespace-b
+spec:
+  podSelector: {}       #selects all pods
+  policyTypes:
+  - Egress
