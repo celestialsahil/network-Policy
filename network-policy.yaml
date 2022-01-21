@@ -1,0 +1,17 @@
+#below networkpolicy allows egress from namespace-a to nginx app in namespace-b
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: test-network-policy
+  namespace: namespace-a 
+spec:
+  podSelector:
+    matchLabels:
+      name: namespacea
+  policyTypes:
+  - Egress
+  egress:
+  - to:
+    - podSelector:
+        matchLabels:
+          app: nginx      #nginx app present in namespace-b
